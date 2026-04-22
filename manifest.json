@@ -1,0 +1,16 @@
+{
+  "name": "Calculadora Académica",
+  "short_name": "Calc",
+  "start_url": "index.html",
+  "display": "standalone",
+  "background_color": "#1a1a1a",
+  "theme_color": "#ff90bf",
+  "description": "Herramienta de cálculo para estudiantes.",
+  "icons": [
+    {
+      "src": "icon.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    }
+  ]
+}
