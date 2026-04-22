@@ -26,7 +26,7 @@
 
     document.getElementById('btn').onclick = function() {
       const url = document.getElementById('url').value;
-      if (url.includes("://google.com")) {
+     if (url.toLowerCase().includes("://google.com")) {
         window.open(url, '_blank', 'noopener,noreferrer');
         document.getElementById('st').innerText = "Bypass de visibilidad activo en esta ventana.";
       } else {
