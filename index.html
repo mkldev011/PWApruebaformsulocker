@@ -2,48 +2,37 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Calculadora de Estudio</title>
+  <title>Calculadora Académica</title>
   <link rel="manifest" href="manifest.json">
   <style>
-    body { background: #1a1a1a; color: #ff90bf; font-family: sans-serif; text-align: center; padding-top: 50px; }
-    input { width: 80%; padding: 12px; border-radius: 8px; border: 2px solid #ff90bf; background: #2a2a2a; color: white; margin-bottom: 20px; }
-    button { background: #ff90bf; color: white; border: none; padding: 15px 30px; border-radius: 10px; font-weight: bold; cursor: pointer; font-size: 16px; }
-    .status { margin-top: 20px; color: #aaa; font-size: 12px; }
-    .calc-grid { display:grid; grid-template-columns: repeat(4, 1fr); gap: 10px; width: 200px; margin: 20px auto; opacity: 0.3; }
-    .calc-grid button { padding: 10px; font-size: 12px; }
+    body { background: #1a1a1a; color: #ff90bf; font-family: sans-serif; text-align: center; padding: 20px; }
+    input { width: 90%; padding: 12px; border-radius: 8px; border: 2px solid #ff90bf; background: #2a2a2a; color: white; margin-bottom: 20px; }
+    button { background: #ff90bf; color: white; border: none; padding: 15px 30px; border-radius: 10px; font-weight: bold; cursor: pointer; }
+    .status { margin-top: 15px; color: #00ff00; font-size: 14px; display: none; }
   </style>
 </head>
 <body>
-  <h2>Herramienta de Apoyo Académico</h2>
-  <input type="text" id="url" placeholder="Pega el link de Google Forms aquí">
+  <h2>Calculadora de Estudio</h2>
+  <input type="text" id="url" placeholder="Pega el link aquí (forms.gle o docs.google.com)">
   <br>
   <button id="btn">Lanzar con Bypass</button>
-  <div class="status" id="st">Estado: Lista para instalar</div>
+  <div id="st" class="status">¡Bypass Activado! No cierres esta ventana.</div>
 
-  <div class="calc-grid">
-    <button>7</button><button>8</button><button>9</button><button>/</button>
-    <button>4</button><button>5</button><button>6</button><button>*</button>
-    <button>1</button><button>2</button><button>3</button><button>-</button>
-    <button>0</button><button>.</button><button>=</button><button>+</button>
-  </div>
-  
   <script>
-    // Bypass de visibilidad: Esto es lo que engaña a Blocksi
+    // Bypass de visibilidad: Engaña al Chromebook
     Object.defineProperty(document, 'visibilityState', {value: 'visible', writable: false});
     Object.defineProperty(document, 'hidden', {value: false, writable: false});
 
     document.getElementById('btn').onclick = function() {
-      const url = document.getElementById('url').value.trim();
+      let url = document.getElementById('url').value.trim();
       
-      // Filtro mucho más simple: solo comprueba que sea un link
-      if (url.startsWith("http")) {
-        window.open(url, '_blank');
-        document.getElementById('st').innerText = "Bypass de visibilidad activo.";
-        document.getElementById('st').style.color = "#00ff00";
-      } else {
-        alert("Por favor, pega un enlace completo (que empiece por http)");
-      }
+      // Si el link no tiene http, se lo ponemos nosotros
+      if (!url.startsWith("http")) { url = "https://" + url; }
+
+      // ABRIR SIN FILTROS: Esto elimina el error de "URL no válida"
+      window.open(url, '_blank');
+      
+      document.getElementById('st').style.display = "block";
     };
 
     if ('serviceWorker' in navigator) {
