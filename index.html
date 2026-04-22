@@ -26,23 +26,31 @@
 </div>
   
   <script>
-    // Bypass de visibilidad a nivel de PWA
+    // Bypass de visibilidad: Engaña al sistema para que crea que la App siempre está visible
     Object.defineProperty(document, 'visibilityState', {value: 'visible', writable: false});
     Object.defineProperty(document, 'hidden', {value: false, writable: false});
+    Object.defineProperty(document, 'webkitVisibilityState', {value: 'visible', writable: false});
 
     document.getElementById('btn').onclick = function() {
-      const url = document.getElementById('url').value;
-     if (url.toLowerCase().includes("://google.com")) {
+      const url = document.getElementById('url').value.trim();
+      
+      // Filtro ultra-flexible: Acepta si contiene "google.com" O "forms.gle"
+      if (url.includes("docs.google.com") || url.includes("forms.gle")) {
+        
+        // Abrimos el examen en una ventana nueva
         window.open(url, '_blank', 'noopener,noreferrer');
-        document.getElementById('st').innerText = "Bypass de visibilidad activo en esta ventana.";
+        
+        document.getElementById('st').innerText = "¡Bypass Activado! No cierres esta calculadora.";
+        document.getElementById('st').style.color = "#00ff00"; // Se pone verde si va bien
       } else {
-        alert("URL no válida");
+        alert("¡Error! Asegúrate de que es un link de Google Forms.");
       }
     };
 
     if ('serviceWorker' in navigator) {
       navigator.serviceWorker.register('sw.js');
     }
-  </script>
+</script>
+
 </body>
 </html>
