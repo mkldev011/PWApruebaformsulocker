@@ -1,7 +1,16 @@
-self.addEventListener('install', (e) => {
-  console.log('PWA de Bypass instalada');
+const CACHE_NAME = 'gfu-v1';
+const assets = ['./', './index.html', './manifest.json'];
+
+self.addEventListener('install', (event) => {
+  event.waitUntil(
+    caches.open(CACHE_NAME).then((cache) => cache.addAll(assets))
+  );
 });
 
-self.addEventListener('fetch', (e) => {
-  // Aquí podrías filtrar tráfico en el futuro
+self.addEventListener('fetch', (event) => {
+  event.respondWith(
+    caches.match(event.request).then((response) => {
+      return response || fetch(event.request);
+    })
+  );
 });
